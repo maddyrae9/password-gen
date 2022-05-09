@@ -1,0 +1,120 @@
+//Generate Password
+var generateBtn = document.querySelector("#generate");
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
+//variables
+var password = "";
+var pwLength = "";
+var chars = "";
+var upperCasechars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var lowerCasechars = "abcdefghijklmnopqrstuvwxyz";
+var charNumber = "0123456789";
+var specialChars = "!@#$%^&*()";
+var charsG = "";
+
+//Input password length
+function pwPrompt(){
+  pwLength = prompt('How Long Would You Like Your Password');
+//Between 8-128 length
+  if (pwLength < 8 || pwLength > 128){
+  window.alert("Password needs to be between 8 and 128 characters in length");
+  pwPrompt();
+}if (isNaN(pwLength)) {
+  window.alert("Password must have a number");
+  return pwPrompt();}
+}
+//Uppercase function
+function casePick1(){
+  var casePickU = "";
+  casePickU = prompt('Would You Like to Include Uppercase? (yes or no)')
+  casePickU = casePickU.toLowerCase();
+  if (casePickU === "yes") {
+    var randoNum = Math.floor(Math.random() * upperCasechars.length);
+    chars += upperCasechars;
+    charsG += upperCasechars.charAt(randoNum);
+  }else if (casePickU === "no"){
+    chars = chars;
+  }else {
+    window.alert("Must be entered as 'yes' or 'no'");
+    casePick1();
+}
+}
+//Lowercase function
+function casePick2(){
+  var casePickL = "";
+  casePickL = prompt('Would you to Include Lowercase? (yes or no)')
+  casePickL = casePickL.toLowerCase();
+  if (casePickL === "yes") {
+    var randoNum = Math.floor(Math.random() * lowerCasechars.length);
+    chars += lowerCasechars;
+    charsG += lowerCasechars.charAt(randoNum);
+  } else if (casePickL === "no"){
+    chars = chars;
+  } else {
+    window.alert ("Must be entered 'yes; or 'no'");
+    casePick2();
+  }
+}
+  //Numbers Function
+  function specialPick1(){
+  var specialPick = "";
+  specialPick = prompt('Would You Like to Include Numbers? (yes or no)')
+  specialPick = specialPick.toLowerCase();
+  if (specialPick === "yes"){
+    var randoNum = Math.floor(Math.random() * charNumber.lenght);
+    chars += charNumber;
+    charsG += charNumber.charAt(randoNum);
+  } else if (specialPick === "no"){
+    chars = chars;
+  } else {
+    window.alert("Must be entered as 'yes' or 'no'");
+    specialPick1();
+  }
+}
+//Special Character Function
+function specialPick2(){
+  var specialPick = "";
+  specialPick = prompt('Would you like to include special characters? (yes or no')
+  specialPick = specialPick.toLowerCase();
+  if (specialPick === "yes") {
+    var randoNum = Math.floor(Math.random() * specialChars.length);
+    chars += specialChars;
+    charsG += specialChars.charAt(randoNum);
+  }else if (specialPick === "no"){
+    chars = chars;
+  }else {
+    window.alert("Must be entered as 'yes' or 'no'");
+    specialPick2();
+  }
+}
+function failSafe(){
+  var failSafe1 = charsG.length;
+  if (failSafe1 < 1) {
+    window.alert('You Must Pick At Least One!');
+    generatePassword();
+  }
+}
+//Generator 
+function generatePassword() {
+  pwPrompt();
+  casePick1();
+  casePick2();
+  specialPick1();
+  specialPick2();
+  failSafe();
+  var charsAll = (pwLength - charsG.length);
+  for (var i = 0; i <= charsAll; i++) {
+    var randoNum = Math.floor(Math.random() * chars.length);
+    password += chars.substring(randoNum, randoNum + 1);
+  };
+  password += charsG;
+  //Validating Password
+  return password
+}
+//Password input
+function writePassword() {
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+
+  passwordText.value = password; 
+}
